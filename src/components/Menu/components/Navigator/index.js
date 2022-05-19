@@ -10,7 +10,7 @@ const Navigator = ({isHidden, onClose}) => {
 
   useEffect(() => {
     Animated.timing(navigatorPosition, {
-      toValue: isHidden ? -style.Navigator.width: 0,
+      toValue: isHidden ? -style.Navigator.width : 0,
       duration: 1000,
       useNativeDriver: false,
     }).start();
