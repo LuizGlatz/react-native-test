@@ -24,20 +24,21 @@ const Calculator = () => {
   };
 
   const calculate = () => {
-    const firstValue = Number(state.values[0]);
-    const secondValue = Number(state.values[1]);
+    if (!['+', '-', '*', '/'].includes(state.operation)) {
+      throw new Error('Operação numérica desconhecida');
+    }
 
-    switch (state.operation) {
-      case '+':
-        return firstValue + secondValue;
-      case '-':
-        return firstValue - secondValue;
-      case '*':
-        return firstValue * secondValue;
-      case '/':
-        return firstValue / secondValue;
-      default:
-        console.error('Operação numérica desconhecida');
+    if (state.values.length < 2) {
+      throw new Error('O cálculo depende de 2 valores definidos');
+    }
+
+    try {
+      // eslint-disable-next-line no-eval
+      return eval(
+        `${state.values[0]} ${state.operation} ${state.values[1]}`,
+      ).toString();
+    } catch (error) {
+      console.log(error);
     }
   };
 
