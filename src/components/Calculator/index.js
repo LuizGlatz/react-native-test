@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import {SafeAreaView, View} from 'react-native';
 import {Button, Display} from '../';
 import style from './style';
+import { calculate } from './utils';
+
 
 const Calculator = () => {
   const [values, setValues] = useState(['0']);
@@ -14,28 +16,9 @@ const Calculator = () => {
     setInputIndex(0);
   };
 
-  const calculate = () => {
-    if (!['+', '-', '*', '/'].includes(operation)) {
-      throw new Error('Operação numérica desconhecida');
-    }
-
-    if (values.length < 2) {
-      throw new Error('O cálculo depende de 2 valores definidos');
-    }
-
-    try {
-      // eslint-disable-next-line no-eval
-      return eval(`${values[0]} ${operation} ${values[1]}`)
-        .toPrecision(6)
-        .toString();
-    } catch (error) {
-      throw new Error(error);
-    }
-  };
-
   const onSubmit = () => {
     try {
-      setValues([calculate()]);
+      setValues([calculate(operation, values)]);
       setInputIndex(0);
       setOperation(null);
     } catch (error) {
@@ -90,7 +73,7 @@ const Calculator = () => {
     );
 
   const inputOperation = inputedOperation => {
-    setValues(inputIndex === 1 ? [calculate(), '0'] : [values[0], '0']);
+    setValues(inputIndex === 1 ? [calculate(operation, values), '0'] : [values[0], '0']);
     setInputIndex(1);
     setOperation(inputedOperation);
   };
