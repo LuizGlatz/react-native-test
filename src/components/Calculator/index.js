@@ -2,8 +2,7 @@ import React, {useState} from 'react';
 import {SafeAreaView, View} from 'react-native';
 import {Button, Display} from '../';
 import style from './style';
-import { calculate } from './utils';
-
+import {calculate} from './utils';
 
 const Calculator = () => {
   const [values, setValues] = useState(['0']);
@@ -73,7 +72,9 @@ const Calculator = () => {
     );
 
   const inputOperation = inputedOperation => {
-    setValues(inputIndex === 1 ? [calculate(operation, values), '0'] : [values[0], '0']);
+    setValues(
+      inputIndex === 1 ? [calculate(operation, values), '0'] : [values[0], '0'],
+    );
     setInputIndex(1);
     setOperation(inputedOperation);
   };
